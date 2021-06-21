@@ -104,30 +104,36 @@ def get_accounts_name(akun_name):
     # kembalikan account
     return accnts
 
+
 def register_account(akun_name):
     try:
-        
-        acc = [akun_name,0]
-        f= open(ACCOUNT_FILE,"a")
-        f.writelines('\n'.join(acc))
+        acc = [akun_name, "0"]
+        f = open(ACCOUNT_FILE, "a")
+        f.write(",".join(acc))
+        f.write("\n")
         f.close()
     except IOError:
         print("gagal registrasi")
 
+
 # melakukan counter_data untuk setiap upload dan download client
+
+
 def counter_data(account):
     # memanggil change value
     return change_value(account)
 
+
 def counter_download(account):
     return change_download(account)
+
 
 def change_download(account):
     akun = get_data_download()
     try:
         akun[account] += 1
         database_download(akun)
-          # return True bila sudah tidak dibutuhkan
+        # return True bila sudah tidak dibutuhkan
         return True
     # bila ada eksepsi key yang error
     except (KeyError):
@@ -174,6 +180,7 @@ def get_accounts_data():
     # kembalikan dictionary akun untuk digunakan pada proses yang membutuhkan
     return accnts
 
+
 def get_data_download():
     # siapkan dictionary untuk menampung data
     accnts = {}
@@ -194,10 +201,6 @@ def get_data_download():
         print("Gagal membuka {}".format(ACCOUNT_FILE))
     # kembalikan dictionary akun untuk digunakan pada proses yang membutuhkan
     return accnts
-
-
-
-
 
 
 # update data di file penyimpanan akun
@@ -224,9 +227,9 @@ def database_download(akun):
         # buka database
         f = open(ACCOUNT_FILE, "w")
         # looping data pada dictionary key => keyvaluedict, val => valuedict {client5 (key) : 0 (value)}
-        for key, val,x in akun.items():
+        for key, val, x in akun.items():
             # write data kedalam database dengan format key,value atu client5,value
-            f.write("{},{},{}\n".format(key,x,val))
+            f.write("{},{},{}\n".format(key, x, val))
         # tutup pembacaan
         f.close()
     # bila terjadi kesalahan input output
@@ -235,6 +238,7 @@ def database_download(akun):
         print("Gagal menambahkan counter {} ".format(ACCOUNT_FILE))
     # mengembalikan true karena fungsi dari def hanya menuliskan dan tidak mendapatkan apapun
     return True
+
 
 def main():
     # kita buat try untuk mencegah eksepsi ketika menjalankan aplikasi
@@ -280,7 +284,7 @@ def main():
     # fungsi untuk melakukan cek keaktifan
     server.register_function(most_active_client, "client_active")
 
-    server.register_function(register_account,"register")
+    server.register_function(register_account, "register")
     # server dinyalakan selamanya hingga ada interupsi untuk mematikan
     server.serve_forever()
 

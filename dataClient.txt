@@ -1,3 +1,5 @@
 client3,0
 client2,0
 client1,0
+tesaja,0
+cumacoba,0

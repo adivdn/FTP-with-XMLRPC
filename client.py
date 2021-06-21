@@ -30,7 +30,7 @@ def dwnl(file_name, clientName):
     print(clientName)
     # print untuk  menandai proses download
     try:
-    # buka file yang baru hasilDownload untuk menerima file yang dikirim server
+        # buka file yang baru hasilDownload untuk menerima file yang dikirim server
         print("Downloading {}".format(file_name))
         with open("download_{}".format(file_name), "wb") as handle:
             # tuliskan perbaris apa yang data yang diterima dari server
@@ -40,7 +40,6 @@ def dwnl(file_name, clientName):
     except Exception as e:
         # jika terjadi eksepsi print eksepsinya
         print(e)
- 
 
 
 # getting server direktori file
@@ -58,7 +57,7 @@ def listFile():
             print("Data Di Server \n")
             # print data byte yang diterima dengan kita decode dulu ke format yang diketahui
             print(data.decode("utf-8"))
-          
+
             listDir = data.decode("utf-8").split()
             # input untuk menu
             prompt = input("Ingin Menutup Menu (Y/N) : ")
@@ -145,15 +144,16 @@ def main():
             "http://127.0.0.1:8000/"
         )  # Ip dan Port disesuaikan, jika ingin menggunakan Radmin VPN
         # lakukan login untuk memastikan data client ada dan dapat digunakan
-        clientName = server.login_client(input("Silahkan Masukan ID anda : "))
+        client_id = input("Silahkan Masukan ID anda : ")
+        clientName = server.login_client(client_id)
         # buat kondisi bila data ada
         listDir = []
         if clientName != "":
             # Open Main Menu
             menu(clientName)
         else:
-            server.register(clientName)
-            menu(clientName)
+            server.register(client_id)
+            menu(client_id)
     # jika socket connection error
     except socket.error as e:
         # print pemberitahuan
@@ -164,5 +164,7 @@ def main():
         print(e)
     except KeyboardInterrupt:
         print("Exiting from programs")
+
+
 if __name__ == "__main__":
     main()
