@@ -145,15 +145,16 @@ def main():
             "http://127.0.0.1:8000/"
         )  # Ip dan Port disesuaikan, jika ingin menggunakan Radmin VPN
         # lakukan login untuk memastikan data client ada dan dapat digunakan
-        clientName = server.login_client(input("Silahkan Masukan ID anda : "))
+        client_id = input("Silahkan Masukan ID anda : ")
+        clientName = server.login_client(client_id)
         # buat kondisi bila data ada
         listDir = []
         if clientName != "":
             # Open Main Menu
             menu(clientName)
         else:
-            server.register(clientName)
-            menu(clientName)
+            server.register(client_id)
+            menu(client_id)
     # jika socket connection error
     except socket.error as e:
         # print pemberitahuan
