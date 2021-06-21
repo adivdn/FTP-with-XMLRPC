@@ -120,20 +120,6 @@ def counter_data(account):
     # memanggil change value
     return change_value(account)
 
-def counter_download(account):
-    return change_download(account)
-
-def change_download(account):
-    akun = get_data_download()
-    try:
-        akun[account] += 1
-        database_download(akun)
-          # return True bila sudah tidak dibutuhkan
-        return True
-    # bila ada eksepsi key yang error
-    except (KeyError):
-        # tidak lakukan apapun tapi kembalikan false
-        return False
 
 
 # merubah value counter
@@ -175,30 +161,6 @@ def get_accounts_data():
     # kembalikan dictionary akun untuk digunakan pada proses yang membutuhkan
     return accnts
 
-def get_data_download():
-    # siapkan dictionary untuk menampung data
-    accnts = {}
-    try:
-        # buka database dari sistem
-        fileData = open(ACCOUNT_FILE, "r")
-        # looping data yang ada di database
-        for line in fileData:
-            # ambil value dari database dan dibuat menjadi client5, ",,", 0
-            value = line.rstrip().partition(",")
-            # buat menjadi dictionary {client5: value[2]}
-            accnts[value[0]] = int(value[2])
-        # tutup pembacaan
-        fileData.close()
-    # bila terjadi error input output
-    except IOError:
-        # Print notifikasi gagal
-        print("Gagal membuka {}".format(ACCOUNT_FILE))
-    # kembalikan dictionary akun untuk digunakan pada proses yang membutuhkan
-    return accnts
-
-
-
-
 
 
 # update data di file penyimpanan akun
@@ -210,24 +172,6 @@ def write_to_database(akun):
         for key, val in akun.items():
             # write data kedalam database dengan format key,value atu client5,value
             f.write("{},{}\n".format(key, val))
-        # tutup pembacaan
-        f.close()
-    # bila terjadi kesalahan input output
-    except IOError:
-        # print notifikasi gagal
-        print("Gagal menambahkan counter {} ".format(ACCOUNT_FILE))
-    # mengembalikan true karena fungsi dari def hanya menuliskan dan tidak mendapatkan apapun
-    return True
-
-
-def database_download(akun):
-    try:
-        # buka database
-        f = open(ACCOUNT_FILE, "w")
-        # looping data pada dictionary key => keyvaluedict, val => valuedict {client5 (key) : 0 (value)}
-        for key, val,x in akun.items():
-            # write data kedalam database dengan format key,value atu client5,value
-            f.write("{},{},{}\n".format(key,x,val))
         # tutup pembacaan
         f.close()
     # bila terjadi kesalahan input output
