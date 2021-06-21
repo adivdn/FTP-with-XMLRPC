@@ -107,9 +107,10 @@ def get_accounts_name(akun_name):
 def register_account(akun_name):
     try:
         
-        acc = [akun_name,0]
+        acc = [akun_name,"0"]
         f= open(ACCOUNT_FILE,"a")
-        f.writelines('\n'.join(acc))
+        f.write(','.join(acc))
+        f.write("\n")
         f.close()
     except IOError:
         print("gagal registrasi")
